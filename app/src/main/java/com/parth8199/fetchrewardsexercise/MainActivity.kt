@@ -13,13 +13,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 private const val TAG = "MainActivity"
+
 class MainActivity : AppCompatActivity() {
     private val frList = GetListFetchRewards()
     private lateinit var rvView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        rvView=findViewById(R.id.rvList)
+        rvView = findViewById(R.id.rvList)
         val rvAdapter = RvViewAdapter(this, frList)
         rvView.adapter = rvAdapter
         rvView.layoutManager = LinearLayoutManager(this)
@@ -30,26 +31,30 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val fetchRewardsService : FetchRewardsService = retrofit.create(FetchRewardsService::class.java)
+        val fetchRewardsService: FetchRewardsService =
+            retrofit.create(FetchRewardsService::class.java)
 
-        fetchRewardsService.getItemById().enqueue(object: Callback<GetListFetchRewards> {
-            override fun onResponse(call: Call<GetListFetchRewards>, response: Response<GetListFetchRewards>) {
+        fetchRewardsService.getItemById().enqueue(object : Callback<GetListFetchRewards> {
+            override fun onResponse(
+                call: Call<GetListFetchRewards>,
+                response: Response<GetListFetchRewards>
+            ) {
                 Log.i(TAG, response.toString())
 
-                if(!response.isSuccessful){
-                    Toast.makeText(this@MainActivity,"Unsuccessful Network Call!",Toast.LENGTH_SHORT).show()
+                if (!response.isSuccessful) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Unsuccessful Network Call!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return
                 }
                 val body = response.body()!!
-                if (body is ArrayList<*>){
-                    val item1 = body[0]
-                    Log.i(TAG, "This is here $body")
-
-                }
-                for(item in body){
-                    if (!item.name.isNullOrEmpty()){
-                        frList.add(item)
+                for (item in body) {
+                    if (item.name.isNullOrEmpty()) {
+                        continue
                     }
+                    frList.add(item)
                 }
                 frList.sortWith(compareBy<GetListFetchRewardsItem> { it.listId }.thenBy { it.id })
                 rvAdapter.notifyDataSetChanged()

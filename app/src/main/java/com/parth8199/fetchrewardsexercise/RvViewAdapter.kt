@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-private const val TAG="RvViewAdapter"
-class RvViewAdapter(private val context: Context, private val frList:GetListFetchRewards):RecyclerView.Adapter<RvViewAdapter.ViewHolder>() {
+private const val TAG = "RvViewAdapter"
+
+class RvViewAdapter(private val context: Context, private val frList: GetListFetchRewards) :
+    RecyclerView.Adapter<RvViewAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,12 +28,17 @@ class RvViewAdapter(private val context: Context, private val frList:GetListFetc
 
     override fun getItemCount() = frList.size
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(frItem: GetListFetchRewardsItem) {
-            tvItem.text = frItem.listId.toString().plus("  ").plus(frItem.id.toString()).plus("  ").plus(frItem.name)
+            // tvListId.text = frItem.listId.toString().plus("                                       ").plus(frItem.id.toString()).plus("                                       ").plus(frItem.name)
+            tvListId.text = frItem.listId.toString()
+            tvId.text = frItem.id.toString()
+            tvName.text = frItem.name
         }
 
-        private val tvItem = itemView.findViewById<TextView>(R.id.tvItem)
+        private val tvListId = itemView.findViewById<TextView>(R.id.tvListId)
+        private val tvId = itemView.findViewById<TextView>(R.id.tvId)
+        private val tvName = itemView.findViewById<TextView>(R.id.tvName)
 
 
     }
