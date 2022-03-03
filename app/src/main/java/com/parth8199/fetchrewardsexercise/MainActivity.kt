@@ -5,10 +5,9 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+
 import retrofit2.*
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 private const val TAG = "MainActivity"
@@ -19,10 +18,10 @@ class MainActivity : AppCompatActivity() {
 
         val textView = findViewById<TextView>(R.id.textview)
 
-        val moshi = Moshi.Builder().add(FetchRewardsArrayListMoshiAdapter()).build()
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://fetch-hiring.s3.amazonaws.com/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val fetchRewardsService : FetchRewardsService = retrofit.create(FetchRewardsService::class.java)
@@ -37,7 +36,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 val body = response.body()
                 if (body is ArrayList<*>){
+                    val item1 = body[0]
                     Log.i(TAG, "This is here $body")
+                    textView.text = item1.id.toString()
                 }
 
 
