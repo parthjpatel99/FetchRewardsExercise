@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface FetchRewardsService {
     @GET("hiring.json")
-    fun getItemById(): Call<Any>
+    fun getItemById(): Call<GetListFetchRewards>
 }
