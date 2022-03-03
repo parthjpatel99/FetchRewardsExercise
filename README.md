@@ -15,5 +15,5 @@ Coding Exercise for Android Internship Position
 Started with Moshi but it parses Json Array as generic List. Tried to workaround using custom adapters but to no avail. Swtiched to Gson then.
 
 ## Open-source libraries used
-- [Android Async HTTP](https://github.com/codepath/CPAsyncHttpClient) - Simple asynchronous HTTP requests with JSON parsing
-- [Glide](https://github.com/bumptech/glide) - Image loading and caching library for Android
+- [Retrofit](https://github.com/square/retrofit) - A type-safe HTTP client for Android and the JVM
+- [Gson](https://github.com/google/gson) - A Java serialization/deserialization library to convert Java Objects into JSON and back
