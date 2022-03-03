@@ -5,6 +5,8 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,11 +14,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
+    private val frList = GetListFetchRewards()
+    private lateinit var rvView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val textView = findViewById<TextView>(R.id.textview)
+        rvView=findViewById(R.id.rvList)
+        val rvAdapter = RvViewAdapter(this, frList)
+        rvView.adapter = rvAdapter
+        rvView.layoutManager = LinearLayoutManager(this)
 
 
         val retrofit = Retrofit.Builder()
@@ -34,14 +40,19 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity,"Unsuccessful Network Call!",Toast.LENGTH_SHORT).show()
                     return
                 }
-                val body = response.body()
+                val body = response.body()!!
                 if (body is ArrayList<*>){
                     val item1 = body[0]
                     Log.i(TAG, "This is here $body")
-                    textView.text = item1.id.toString()
+
                 }
-
-
+                for(item in body){
+                    if (!item.name.isNullOrEmpty()){
+                        frList.add(item)
+                    }
+                }
+                frList.sortWith(compareBy<GetListFetchRewardsItem> { it.listId }.thenBy { it.id })
+                rvAdapter.notifyDataSetChanged()
             }
 
             override fun onFailure(call: Call<GetListFetchRewards>, t: Throwable) {
