@@ -1,7 +1,7 @@
 # FetchRewardsExercise
 Coding Exercise for Android Internship Position 
 
-##Solution 1 
+## Solution 1 
 
 - This is a simple solution where all the logic rests in the MainActivity and views are implemented using RecyclerView.
 - Used Retrofit for network call and Gson for parsing Json Array to Object Arraylist.
