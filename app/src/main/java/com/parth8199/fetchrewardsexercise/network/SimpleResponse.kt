@@ -3,6 +3,7 @@ package com.parth8199.fetchrewardsexercise.network
 import retrofit2.Response
 import java.lang.Exception
 
+//Implements Failure and Success status for network request made because unlike return type of Retrofit 'Call', 'Response' does not handle it by default
 data class SimpleResponse<T>(
     val status: Status,
     val data: Response<T>?,

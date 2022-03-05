@@ -9,6 +9,7 @@ object NetworkLayer {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
+    //GET request
     val fetchRewardsService: FetchRewardsService by lazy {
         retrofit.create(FetchRewardsService::class.java)
     }

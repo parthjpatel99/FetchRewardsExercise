@@ -10,6 +10,7 @@ class ApiClient(
         return safeApiCall { fetchRewardsService.getItemById() }
     }
 
+    //Handle successful and failed network request
     private inline fun <T> safeApiCall(apiCall: () -> Response<T>): SimpleResponse<T> {
         return try {
             SimpleResponse.success(apiCall.invoke())

@@ -3,7 +3,7 @@ package com.parth8199.fetchrewardsexercise.domain.mapper
 import com.parth8199.fetchrewardsexercise.domain.models.AnItem
 import com.parth8199.fetchrewardsexercise.domain.models.ItemList
 import com.parth8199.fetchrewardsexercise.network.response.GetListFetchRewards
-
+//The sorting and Name notNull logic is handled here mapping from network layer data to domain layer data
 object ItemMapper {
     fun buidlFrom(response:GetListFetchRewards): ItemList {
         val list = ItemList()
