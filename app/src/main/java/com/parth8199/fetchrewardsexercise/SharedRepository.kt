@@ -1,7 +1,11 @@
 package com.parth8199.fetchrewardsexercise
 
+import com.parth8199.fetchrewardsexercise.domain.mapper.ItemMapper
+import com.parth8199.fetchrewardsexercise.domain.models.ItemList
+import com.parth8199.fetchrewardsexercise.network.NetworkLayer
+
 class SharedRepository {
-    suspend fun getItemById(): GetListFetchRewards?{
+    suspend fun getItemById(): ItemList?{
         val request = NetworkLayer.apiClient.getItemById()
         if (request.failed){
             return null
@@ -9,6 +13,6 @@ class SharedRepository {
         if (!request.isSuccessful){
             return null
         }
-        return request.body
+        return ItemMapper.buidlFrom(response = request.body)
     }
 }

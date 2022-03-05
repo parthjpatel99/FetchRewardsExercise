@@ -7,10 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.parth8199.fetchrewardsexercise.domain.models.AnItem
+import com.parth8199.fetchrewardsexercise.domain.models.ItemList
+import com.parth8199.fetchrewardsexercise.network.response.GetListFetchRewards
+import com.parth8199.fetchrewardsexercise.network.response.GetListFetchRewardsItem
 
 private const val TAG = "RvViewAdapter"
 
-class RvViewAdapter(private val context: Context, private val frList: GetListFetchRewards) :
+class RvViewAdapter(private val context: Context, private val frList: ItemList) :
     RecyclerView.Adapter<RvViewAdapter.ViewHolder>() {
 
 
@@ -29,7 +33,7 @@ class RvViewAdapter(private val context: Context, private val frList: GetListFet
     override fun getItemCount() = frList.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(frItem: GetListFetchRewardsItem) {
+        fun bind(frItem: AnItem) {
             // tvListId.text = frItem.listId.toString().plus("                                       ").plus(frItem.id.toString()).plus("                                       ").plus(frItem.name)
             tvListId.text = frItem.listId.toString()
             tvId.text = frItem.id.toString()

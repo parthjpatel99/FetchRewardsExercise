@@ -1,4 +1,4 @@
-package com.parth8199.fetchrewardsexercise
+package com.parth8199.fetchrewardsexercise.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -9,9 +9,9 @@ object NetworkLayer {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val fetchRewardsService: FetchRewardsService by lazy{
+    val fetchRewardsService: FetchRewardsService by lazy {
         retrofit.create(FetchRewardsService::class.java)
     }
 
-    val apiClient= ApiClient(fetchRewardsService)
+    val apiClient = ApiClient(fetchRewardsService)
 }

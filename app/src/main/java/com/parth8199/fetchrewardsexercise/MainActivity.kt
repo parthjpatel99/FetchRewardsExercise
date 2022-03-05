@@ -1,27 +1,25 @@
 package com.parth8199.fetchrewardsexercise
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
-import retrofit2.*
-import retrofit2.converter.gson.GsonConverterFactory
+import com.parth8199.fetchrewardsexercise.domain.models.ItemList
+import com.parth8199.fetchrewardsexercise.network.response.GetListFetchRewards
+import com.parth8199.fetchrewardsexercise.network.response.GetListFetchRewardsItem
 
 
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
-    val viewModel:SharedViewModel by lazy {
+    val viewModel: SharedViewModel by lazy {
         ViewModelProvider(this).get(SharedViewModel::class.java)
     }
 
-    private val frList = GetListFetchRewards()
+    private val frList = ItemList()
     private lateinit var rvView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         rvView.layoutManager = LinearLayoutManager(this)
 
         viewModel.refreshItem()
-        viewModel.itemByIdLiveData.observe(this){response ->
-            if (response==null){
+        viewModel.itemByIdLiveData.observe(this) { itemList ->
+            if (itemList == null) {
                 Toast.makeText(
                     this@MainActivity,
                     "Unsuccessful Network Call!",
@@ -41,14 +39,7 @@ class MainActivity : AppCompatActivity() {
                 ).show()
                 return@observe
             }
-            val body = response
-            for (item in body) {
-                if (item.name.isNullOrEmpty()) {
-                    continue
-                }
-                frList.add(item)
-            }
-            frList.sortWith(compareBy<GetListFetchRewardsItem> { it.listId }.thenBy { it.id })
+            frList.addAll(itemList)
             rvAdapter.notifyDataSetChanged()
         }
 
